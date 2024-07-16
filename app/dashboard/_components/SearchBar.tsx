@@ -1,7 +1,12 @@
 import { Search } from "lucide-react";
 import React from "react";
 
-const SearchBar: React.FC = () => {
+type SearchBarProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
   return (
     <div className="flex items-center flex-col gap-3 justify-center p-10 bg-gradient-to-br from-gray-950 via-gray-900 to-black">
       <h2 className="text-white text-3xl font-bold">Browse All Templates</h2>
@@ -15,6 +20,8 @@ const SearchBar: React.FC = () => {
           type="text"
           placeholder="Search for templates"
           className="outline-none bg-inherit"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
         />
       </div>
     </div>
