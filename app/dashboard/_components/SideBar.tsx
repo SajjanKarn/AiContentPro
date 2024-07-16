@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FileClock, Home, Settings, WalletCards } from "lucide-react";
+import Link from "next/link";
 
 type MenuItem = {
   name: string;
@@ -53,15 +54,17 @@ const SideBar: React.FC = () => {
 
       <div className="mt-5">
         {menuList.map((item) => (
-          <div
-            key={item.name}
-            className={`flex items-center mt-5 cursor-pointer hover:bg-primary hover:text-white p-3 rounded-lg transition-colors
+          <Link href={item.route} key={item.name}>
+            <div
+              key={item.name}
+              className={`flex items-center mt-5 cursor-pointer hover:bg-primary hover:text-white p-3 rounded-lg transition-colors
                     ${pathname === item.route && "bg-primary text-white"}
                 `}
-          >
-            <item.icon />
-            <span className="ml-3">{item.name}</span>
-          </div>
+            >
+              <item.icon />
+              <span className="ml-3">{item.name}</span>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

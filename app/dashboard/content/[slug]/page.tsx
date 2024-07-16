@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { chatSession } from "@/utils/AiModel";
+import { db } from "@/utils/db";
+import { AiOutput } from "@/utils/schema";
+import { useUser } from "@clerk/nextjs";
 
 type ContentProps = {
   params: {
@@ -15,6 +18,7 @@ type ContentProps = {
 };
 
 const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
+  const { user } = useUser();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [output, setOutput] = React.useState<string>("");
 
@@ -28,10 +32,34 @@ const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
       const prompt = selectedTemplate?.aiPrompt;
       const finalPrompt = JSON.stringify(formData) + ", " + prompt;
 
-      console.log(finalPrompt);
-
       const result = await chatSession.sendMessage(finalPrompt);
-      setOutput(result?.response?.text);
+
+      setOutput(result?.response.text());
+
+      saveToDatabase(JSON.stringify(formData), result?.response.text(), slug);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveToDatabase = async (
+    formData: string,
+    response: any,
+    slug: string
+  ) => {
+    try {
+      setLoading(true);
+
+      // @ts-ignore
+      const result = await db.insert(AiOutput).values({
+        formData,
+        aiResponse: response,
+        templateSlug: slug,
+        createdBy: user?.id,
+        createdAt: new Date().toISOString(),
+      });
     } catch (error) {
       console.error(error);
     } finally {
