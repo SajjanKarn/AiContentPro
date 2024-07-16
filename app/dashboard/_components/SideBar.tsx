@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { FileClock, Home, Settings, WalletCards } from "lucide-react";
 import Link from "next/link";
 import CreditUsage from "./CreditUsage";
+import { Button } from "@/components/ui/button";
 
 type MenuItem = {
   name: string;
@@ -41,19 +42,21 @@ const SideBar: React.FC = () => {
   const pathname = usePathname();
 
   return (
-    <div className="h-screen shadow-sm border p-5">
-      <div className="flex justify-center">
-        <Image
-          src="/logo.svg"
-          alt="logo"
-          width={150}
-          height={100}
-          className="hover:scale-105 cursor-pointer transition-transform"
-        />
+    <div className="relative h-screen shadow-sm border p-5">
+      <div className="relative flex justify-center">
+        <Link href="/dashboard">
+          <Image
+            src="/logo.svg"
+            alt="logo"
+            width={150}
+            height={100}
+            className="hover:scale-105 cursor-pointer transition-transform"
+          />
+        </Link>
       </div>
       <hr className="mt-5 border" />
 
-      <div className="mt-5">
+      <div className="relative mt-5">
         {menuList.map((item) => (
           <Link href={item.route} key={item.name}>
             <div
@@ -71,6 +74,9 @@ const SideBar: React.FC = () => {
 
       <div className="absolute bottom-5 left-0 p-3 w-full">
         <CreditUsage />
+        <Button className="w-full mt-2 text-primary" variant="outline">
+          Upgrade
+        </Button>
       </div>
     </div>
   );

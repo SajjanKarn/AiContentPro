@@ -1,7 +1,35 @@
+"use client";
+import CreditUsageContext from "@/app/(context)/CreditUsage";
 import { Progress } from "@/components/ui/progress";
-import React from "react";
+import { db } from "@/utils/db";
+import { AiOutput } from "@/utils/schema";
+import { useUser } from "@clerk/nextjs";
+import { eq } from "drizzle-orm";
+import React, { useEffect } from "react";
 
 const CreditUsage: React.FC = () => {
+  const { user } = useUser();
+  const { totalUsage, setTotalUsage } = React.useContext(CreditUsageContext);
+
+  useEffect(() => {
+    user && getTotalUsage();
+  }, [user]);
+
+  const getTotalUsage = async () => {
+    const result = await db
+      .select()
+      .from(AiOutput)
+      // @ts-ignore
+      .where(eq(AiOutput.createdBy, user?.primaryEmailAddress?.emailAddress));
+
+    let total: number = 0;
+    result.forEach((item) => {
+      total = total + Number(item.aiResponse?.length);
+    });
+
+    setTotalUsage(total);
+  };
+
   return (
     <div className="bg-[#202740] p-5 rounded-md">
       <h1 className="text-lg text-white font-bold">Credit Usage</h1>
@@ -14,7 +42,9 @@ const CreditUsage: React.FC = () => {
         />
       </div>
 
-      <p className="text-white text-sm mt-3">30 / 100 credits used</p>
+      <p className="text-white text-sm mt-3">
+        {totalUsage.toLocaleString()} / 20,000 credits used
+      </p>
     </div>
   );
 };

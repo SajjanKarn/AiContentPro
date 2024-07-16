@@ -11,6 +11,9 @@ import { db } from "@/utils/db";
 import { AiOutput } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 
+import toast, { Toaster } from "react-hot-toast";
+import CreditUsageContext from "@/app/(context)/CreditUsage";
+
 type ContentProps = {
   params: {
     slug: string;
@@ -19,6 +22,7 @@ type ContentProps = {
 
 const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
   const { user } = useUser();
+  const { totalUsage } = React.useContext(CreditUsageContext);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [output, setOutput] = React.useState<string>("");
 
@@ -27,6 +31,21 @@ const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
   );
 
   const GenerateAIContent = async (formData: any) => {
+    if (!formData) {
+      toast.error("Please fill the form");
+      return;
+    }
+
+    if (totalUsage >= 20000) {
+      toast.error(
+        "You have reached your daily limit of 20,000 credits\nPlease Upgrade",
+        {
+          position: "bottom-right",
+        }
+      );
+      return;
+    }
+
     try {
       setLoading(true);
       const prompt = selectedTemplate?.aiPrompt;
@@ -69,6 +88,7 @@ const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
 
   return (
     <div className="p-5">
+      <Toaster />
       <Link href={"/dashboard"}>
         <Button>
           <ArrowLeft />

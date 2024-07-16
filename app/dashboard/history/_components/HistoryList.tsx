@@ -6,6 +6,7 @@ import { AiOutput } from "@/utils/schema";
 import { Copy } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import ClipBoard from "./ClipBoard";
 
 const fetchHistory = async () => {
   try {
@@ -78,10 +79,7 @@ const HistoryList: React.FC = async () => {
                 new Date(history?.createdAt).toLocaleString()}
             </div>
             <div className="col-span-1">
-              <Button variant="ghost">
-                <Copy className="mr-2" />
-                Copy
-              </Button>
+              <ClipBoard value={history.aiResponse as string} />
             </div>
           </div>
         ))}
