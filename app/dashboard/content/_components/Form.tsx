@@ -5,13 +5,19 @@ import { Template } from "@/app/(data)/Templates";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Loader2, Loader2Icon } from "lucide-react";
 
 type FormProps = {
   selectedTemplate: Template | undefined;
   userFormInput: (formData: any) => void;
+  loading?: boolean;
 };
 
-const Form: React.FC<FormProps> = ({ selectedTemplate, userFormInput }) => {
+const Form: React.FC<FormProps> = ({
+  selectedTemplate,
+  userFormInput,
+  loading,
+}) => {
   const [formData, setFormData] = useState<any>();
 
   const handleOnChange = (
@@ -68,6 +74,7 @@ const Form: React.FC<FormProps> = ({ selectedTemplate, userFormInput }) => {
             ))}
 
             <Button type="submit" className="w-full py-6">
+              {loading && <Loader2Icon className="animate-spin" />}
               Generate Content
             </Button>
           </div>

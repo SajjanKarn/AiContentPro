@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Copy } from "lucide-react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
 import { Button } from "@/components/ui/button";
 
-const Output: React.FC = () => {
+type OutputProps = {
+  output: string;
+  loading?: boolean;
+};
+
+const Output: React.FC<OutputProps> = ({ output, loading }) => {
   const editorRef: any = React.useRef(null);
+
+  useEffect(() => {
+    if (output) {
+      editorRef.current.getInstance().setMarkdown(output);
+    }
+  }, [output]);
 
   return (
     <div className="border shadow-md rounded-md">

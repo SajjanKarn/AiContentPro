@@ -6,6 +6,7 @@ import Templates, { Template } from "@/app/(data)/Templates";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { chatSession } from "@/utils/AiModel";
 
 type ContentProps = {
   params: {
@@ -14,12 +15,28 @@ type ContentProps = {
 };
 
 const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [output, setOutput] = React.useState<string>("");
+
   const selectedTemplate: Template | undefined = Templates?.find(
     (template) => template.slug === slug
   );
 
-  const GenerateAIContent = (formData: any) => {
-    console.log(formData);
+  const GenerateAIContent = async (formData: any) => {
+    try {
+      setLoading(true);
+      const prompt = selectedTemplate?.aiPrompt;
+      const finalPrompt = JSON.stringify(formData) + ", " + prompt;
+
+      console.log(finalPrompt);
+
+      const result = await chatSession.sendMessage(finalPrompt);
+      setOutput(result?.response?.text);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,11 +52,12 @@ const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
           <Form
             selectedTemplate={selectedTemplate}
             userFormInput={GenerateAIContent}
+            loading={loading}
           />
         </div>
 
         <div className="col-span-2">
-          <Output />
+          <Output output={output} loading={loading} />
         </div>
       </div>
     </div>
