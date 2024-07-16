@@ -3,7 +3,7 @@ import React from "react";
 
 const Header: React.FC = () => {
   return (
-    <div className="flex justify-between items-center p-5 border shadow-sm">
+    <div className="flex flex-col gap-3 lg:flex-row lg:justify-between items-center p-5 border shadow-sm">
       <div className="flex items-center gap-2 max-w-lg border-2 border-gray-200 rounded-lg p-2">
         <Search />
         <input type="text" placeholder="Search ..." className="outline-none " />

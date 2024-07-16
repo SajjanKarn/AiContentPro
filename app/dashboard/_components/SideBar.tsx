@@ -1,6 +1,8 @@
-import { FileClock, Home, Settings, WalletCards } from "lucide-react";
-import Image from "next/image";
+"use client";
 import React from "react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { FileClock, Home, Settings, WalletCards } from "lucide-react";
 
 type MenuItem = {
   name: string;
@@ -10,29 +12,31 @@ type MenuItem = {
 
 type MenuList = MenuItem[];
 
+const menuList: MenuList = [
+  {
+    name: "Home",
+    icon: Home,
+    route: "/dashboard",
+  },
+  {
+    name: "History",
+    icon: FileClock,
+    route: "/dashboard/history",
+  },
+  {
+    name: "Billing",
+    icon: WalletCards,
+    route: "/dashboard/billing",
+  },
+  {
+    name: "Setting",
+    icon: Settings,
+    route: "/dashboard/setting",
+  },
+];
+
 const SideBar: React.FC = () => {
-  const menuList: MenuList = [
-    {
-      name: "Home",
-      icon: Home,
-      route: "/dashboard",
-    },
-    {
-      name: "History",
-      icon: FileClock,
-      route: "/dashboard/history",
-    },
-    {
-      name: "Billing",
-      icon: WalletCards,
-      route: "/dashboard/billing",
-    },
-    {
-      name: "Setting",
-      icon: Settings,
-      route: "/dashboard/setting",
-    },
-  ];
+  const pathname = usePathname();
 
   return (
     <div className="h-screen shadow-sm border p-5">
@@ -51,7 +55,9 @@ const SideBar: React.FC = () => {
         {menuList.map((item) => (
           <div
             key={item.name}
-            className="flex items-center mt-5 cursor-pointer hover:bg-primary hover:text-white p-3 rounded-lg transition-colors"
+            className={`flex items-center mt-5 cursor-pointer hover:bg-primary hover:text-white p-3 rounded-lg transition-colors
+                    ${pathname === item.route && "bg-primary text-white"}
+                `}
           >
             <item.icon />
             <span className="ml-3">{item.name}</span>
