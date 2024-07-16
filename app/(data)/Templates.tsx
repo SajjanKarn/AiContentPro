@@ -1,4 +1,21 @@
-export default [
+export type Template = {
+  name: string;
+  desc: string;
+  category: string;
+  icon: string;
+  aiPrompt: string;
+  slug: string;
+  form: Form[];
+};
+
+export type Form = {
+  label: string;
+  field: string;
+  name: string;
+  required?: boolean;
+};
+
+const Templates: Template[] = [
   {
     name: "Blog Title",
     desc: "An AI tool that generate blog title depends on yout blog information",
@@ -355,3 +372,5 @@ export default [
     ],
   },
 ];
+
+export default Templates;
