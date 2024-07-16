@@ -57,7 +57,7 @@ const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
         formData,
         aiResponse: response,
         templateSlug: slug,
-        createdBy: user?.id,
+        createdBy: user?.primaryEmailAddress?.emailAddress,
         createdAt: new Date().toISOString(),
       });
     } catch (error) {

@@ -7,15 +7,6 @@ import { Copy } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-type History = {
-  id: number;
-  formData: string;
-  aiResponse: string;
-  templateSlug: string;
-  createdBy: string;
-  createdAt: string;
-};
-
 const fetchHistory = async () => {
   try {
     const result = await db.select().from(AiOutput);
@@ -38,21 +29,34 @@ const HistoryList: React.FC = async () => {
       </p>
 
       <div className="mt-5">
+        {result && result?.length === 0 && (
+          <>
+            <h1 className="text-4xl font-semibold text-center">
+              No history found
+            </h1>
+            <p className="text-center mt-3 text-gray-600">
+              Generate AI content to see history
+            </p>
+          </>
+        )}
+
         {/* table header */}
-        <div className="grid grid-cols-5">
-          <div className="font-semibold col-span-1 bg-gray-900 p-3 text-white uppercase">
-            Template
+        {result && result?.length > 0 && (
+          <div className="grid grid-cols-5">
+            <div className="font-semibold col-span-1 bg-gray-900 p-3 text-white uppercase">
+              Template
+            </div>
+            <div className="font-semibold col-span-2 bg-gray-900 p-3 text-white uppercase">
+              Ai response
+            </div>
+            <div className="font-semibold col-span-1 bg-gray-900 p-3 text-white uppercase">
+              Date
+            </div>
+            <div className="font-semibold col-span-1 bg-gray-900 p-3 text-white uppercase">
+              copy
+            </div>
           </div>
-          <div className="font-semibold col-span-2 bg-gray-900 p-3 text-white uppercase">
-            Ai resp
-          </div>
-          <div className="font-semibold col-span-1 bg-gray-900 p-3 text-white uppercase">
-            Date
-          </div>
-          <div className="font-semibold col-span-1 bg-gray-900 p-3 text-white uppercase">
-            copy
-          </div>
-        </div>
+        )}
 
         {result?.map((history) => (
           <div

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FileClock, Home, Settings, WalletCards } from "lucide-react";
 import Link from "next/link";
+import CreditUsage from "./CreditUsage";
 
 type MenuItem = {
   name: string;
@@ -66,6 +67,10 @@ const SideBar: React.FC = () => {
             </div>
           </Link>
         ))}
+      </div>
+
+      <div className="absolute bottom-5 left-0 p-3 w-full">
+        <CreditUsage />
       </div>
     </div>
   );
