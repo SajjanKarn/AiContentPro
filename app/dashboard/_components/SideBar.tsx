@@ -46,7 +46,7 @@ const SideBar: React.FC = () => {
       <div className="relative flex justify-center">
         <Link href="/dashboard">
           <Image
-            src="/logo.svg"
+            src="/icon.svg"
             alt="logo"
             width={150}
             height={100}

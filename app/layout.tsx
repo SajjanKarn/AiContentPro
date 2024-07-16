@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "AIContentPro",
   description:
     "AIContentPro is a tool to generate AI content. It uses the Google Generative AI to generate content based on the user input.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
