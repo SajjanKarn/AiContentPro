@@ -26,11 +26,11 @@ const menuList: MenuList = [
     icon: FileClock,
     route: "/dashboard/history",
   },
-  {
-    name: "Billing",
-    icon: WalletCards,
-    route: "/dashboard/billing",
-  },
+  // {
+  //   name: "Billing",
+  //   icon: WalletCards,
+  //   route: "/dashboard/billing",
+  // },
   {
     name: "Setting",
     icon: Settings,
@@ -74,9 +74,9 @@ const SideBar: React.FC = () => {
 
       <div className="absolute bottom-5 left-0 p-3 w-full">
         <CreditUsage />
-        <Button className="w-full mt-2 text-primary" variant="outline">
+        {/* <Button className="w-full mt-2 text-primary" variant="outline">
           Upgrade
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

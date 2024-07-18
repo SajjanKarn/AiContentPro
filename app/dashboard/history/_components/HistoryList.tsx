@@ -7,10 +7,18 @@ import { Copy } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import ClipBoard from "./ClipBoard";
+import { currentUser } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 
 const fetchHistory = async () => {
+  const user = await currentUser();
+
   try {
-    const result = await db.select().from(AiOutput);
+    const result = await db
+      .select()
+      .from(AiOutput)
+      // @ts-ignore
+      .where(eq(AiOutput.createdBy, user?.primaryEmailAddress?.emailAddress));
     return result;
   } catch (error) {
     console.error(error);

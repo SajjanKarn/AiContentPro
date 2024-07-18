@@ -36,7 +36,7 @@ const CreditUsage: React.FC = () => {
 
       <div className="w-full">
         <Progress
-          value={30}
+          value={Math.floor((totalUsage / 20000) * 100)}
           className="bg-[#393f55] mt-3"
           // change the fill color of the progress bar
         />
