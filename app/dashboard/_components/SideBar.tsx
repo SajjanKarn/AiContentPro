@@ -72,12 +72,12 @@ const SideBar: React.FC = () => {
         ))}
       </div>
 
-      <div className="absolute bottom-5 left-0 p-3 w-full">
+      {/* <div className="absolute bottom-5 left-0 p-3 w-full">
         <CreditUsage />
-        {/* <Button className="w-full mt-2 text-primary" variant="outline">
+        <Button className="w-full mt-2 text-primary" variant="outline">
           Upgrade
-        </Button> */}
-      </div>
+        </Button>
+      </div> */}
     </div>
   );
 };

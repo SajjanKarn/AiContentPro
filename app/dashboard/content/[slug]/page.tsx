@@ -36,15 +36,15 @@ const Content: React.FC<ContentProps> = ({ params: { slug } }) => {
       return;
     }
 
-    if (totalUsage >= 20000) {
-      toast.error(
-        "You have reached your daily limit of 20,000 credits\nPlease Upgrade",
-        {
-          position: "bottom-right",
-        }
-      );
-      return;
-    }
+    // if (totalUsage >= 20000) {
+    //   toast.error(
+    //     "You have reached your daily limit of 20,000 credits\nPlease Upgrade",
+    //     {
+    //       position: "bottom-right",
+    //     }
+    //   );
+    //   return;
+    // }
 
     try {
       setLoading(true);
