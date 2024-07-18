@@ -19,7 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
         <input
           type="text"
           placeholder="Search for templates"
-          className="outline-none bg-inherit"
+          className="outline-none bg-inherit w-full"
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />
